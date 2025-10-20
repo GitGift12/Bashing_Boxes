@@ -1,2 +1,2 @@
 #!/bin/bash
-Frost=
+Frost=("Tie" "Menu" "Umbrela" "Dish" "Flame" "Padlock" "Shampoo" "Egg" "Shield" "Nachos")
