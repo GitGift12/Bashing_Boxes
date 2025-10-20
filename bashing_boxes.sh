@@ -7,3 +7,5 @@ echo "4. Remove Last Item"
 echo "5. Remove Item at Position"
 echo "6. Exit"
 read -p "Choose an option: " choice
+case $choice in
+	
