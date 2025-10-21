@@ -8,7 +8,7 @@ echo "${Frost[@]}"
 
 bashingbox2()
 {
-
+echo "this is a placeholder"
 }
 
 bashingbox3()
@@ -16,21 +16,22 @@ bashingbox3()
 echo "What Do You Want To Call The Item?"
 read ItemNew
 Frost+=("$ItemNew")
+echo "${Frost[@]}"
 }
 
 bashingbox4()
 {
-
+echo "this is a placeholder"
 }
 
 bashingbox5()
 {
-
+echo "this is a placeholder"
 }
 
 bashingbox6()
 {
-
+exit
 }
 
 
@@ -62,6 +63,8 @@ elif [[ $choice == "5" ]]; then
 	bashingbox5
 elif [[ $choice == '6' ]]; then
 	bashingbox6
+else 
+	echo "Could Not Proceed With Command"
 fi 	
 	
 	
