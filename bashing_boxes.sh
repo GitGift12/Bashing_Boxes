@@ -21,12 +21,26 @@ echo "${Frost[@]}"
 
 bashingbox4()
 {
-echo "this is a placeholder"
+if [[ ${#Frost[@]} -gt 0 ]]; then
+	unset 'Frost[-1]'
+	Frost=("${Frost[@]}")
+	echo "Last Item Removed."
+	echo "${Frost[@]}"
+else
+	echo "The List Is Already Empty."
+fi
 }
 
 bashingbox5()
 {
-echo "this is a placeholder"
+read -p "Enter Position to Remove (1-${#Frost[@]}): " pos
+if [[ "$pos" =~ ^[0-9]+$ ]] && (( pos >= 1 && pos <= ${Frost[@]} )); then
+	unset 'Frost[$((pos-1))]'
+	Frost=("${Frost[@]}")
+	echo "Item at Position $pos removed."
+else
+	echo "Invalid Position! Please Enter A Number Between 1 and ${#Frost[@]}."
+fi
 }
 
 bashingbox6()
