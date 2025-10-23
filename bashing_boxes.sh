@@ -8,7 +8,12 @@ echo "${Frost[@]}"
 
 bashingbox2()
 {
-echo "this is a placeholder"
+read -p "Enter the position of the item to print (1-${#Frost[@]}): " answer
+if [[ "$answer" =~ ^[0-9]+$ ]] && (( answer >= 1 && answer <= ${#Frost[@]} )); then
+	echo "Your item is: ${Frost[$((answer-1))]}"
+else
+	echo "Invalid position! Please enter a number between 1 and ${#Frost[@]}."
+fi
 }
 
 bashingbox3()
@@ -33,11 +38,12 @@ fi
 
 bashingbox5()
 {
-read -p "Enter Position to Remove (1-${#Frost[@]}): " pos
-if [[ "$pos" =~ ^[0-9]+$ ]] && (( pos >= 1 && pos <= ${Frost[@]} )); then
-	unset 'Frost[$((pos-1))]'
+read -p "Enter Position to Remove (1-${#Frost[@]}): " position_of_word
+if [[ "$position_of_word" =~ ^[0-9]+$ ]] && (( position_of_word >= 1 && position_of_word <= ${#Frost[@]} )); then
+	unset 'Frost[$((position_of_word-1))]'
 	Frost=("${Frost[@]}")
-	echo "Item at Position $pos removed."
+	echo "Item at Position $position_of_word removed."
+	echo "${Frost[@]}"
 else
 	echo "Invalid Position! Please Enter A Number Between 1 and ${#Frost[@]}."
 fi
