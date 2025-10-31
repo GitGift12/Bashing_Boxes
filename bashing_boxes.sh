@@ -1,5 +1,7 @@
 #!/bin/bash
 Frost=("Tie" "Menu" "Umbrela" "Dish" "Flame" "Padlock" "Shampoo" "Egg" "Shield" "Nachos")
+DATA_DIR="data"
+mkdir -p "$DATA_DIR"
 
 bashingbox()
 {
@@ -49,8 +51,52 @@ else
 fi
 }
 
+bashingbox7()
+{
+read -p "Enter a name for your save file: " filename
+if [ -z "$filename" ]; then
+	echo "Filename cannot be empty."
+	return
+fi
+echo "${Frost[@]}" > "$DATA_DIR/$filename.txt"
+echo "Box saved as $filename.txt"
+}
+
+bashingbox8()
+{
+read -p "Enter the name of the file to load: " filename
+if [ ! -f "$DATA_DIR/$filename.txt" ]; then
+	echo "File not found!"
+	return
+fi
+mapfile -t Frost < <(tr ' ' '\n' < "$DATA_DIR/$filename.txt")
+echo "Box Loaded from $filename.txt"
+echo "${Frost[@]}"
+}
+
+bashingbox9()
+{
+echo "Saved boxes:"
+ls "$DATA_DIR"
+}
+
+bashingboxes10()
+{
+read -p "Enter the name of the save to delete: " filename
+if [ -f "$DATA_DIR/$filename.txt" ]; then
+	rm "$DATA_DIR/$filename.txt"
+	echo "$filename.txt deleted."
+else
+	echo "No such file found."
+fi
+}
+
 bashingbox6()
 {
+read -p "Would you like to save before exiting? (y/n): " choice
+if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+	bashingbox7
+fi
 exit
 }
 
@@ -70,6 +116,10 @@ echo "3. Add Item"
 echo "4. Remove Last Item"
 echo "5. Remove Item at Position"
 echo "6. Exit"
+echo "7. Save Box"
+echo "8. Load Box"
+echo "9. List Saved Boxes"
+echo "10. Delete Saved Box"
 read -p "Choose an option: " choice
 if [[ $choice == "1" ]]; then
 	bashingbox
@@ -87,4 +137,4 @@ else
 	echo "Could Not Proceed With Command"
 fi 	
 	
-	
+
