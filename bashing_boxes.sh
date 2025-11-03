@@ -80,7 +80,7 @@ echo "Saved boxes:"
 ls "$DATA_DIR"
 }
 
-bashingboxes10()
+bashingbox0()
 {
 read -p "Enter the name of the save to delete: " filename
 if [ -f "$DATA_DIR/$filename.txt" ]; then
@@ -119,7 +119,7 @@ echo "6. Exit"
 echo "7. Save Box"
 echo "8. Load Box"
 echo "9. List Saved Boxes"
-echo "10. Delete Saved Box"
+echo "0. Delete Saved Box"
 read -p "Choose an option: " choice
 if [[ $choice == "1" ]]; then
 	bashingbox
@@ -133,6 +133,14 @@ elif [[ $choice == "5" ]]; then
 	bashingbox5
 elif [[ $choice == '6' ]]; then
 	bashingbox6
+elif [[ $choice == '7' ]]; then
+	bashingbox7
+elif [[ $choice == '8' ]]; then
+	bashingbox8
+elif [[ $choice == '9' ]]; then
+	bashingbox9
+elif [[ $choice == '0' ]]; then
+	bashingbox0
 else 
 	echo "Could Not Proceed With Command"
 fi 	
