@@ -1,4 +1,8 @@
 #!/bin/bash
+#Author Of Script: Kunj
+#Description: This is a simple bash program which manages an array of items.
+
+
 Frost=("Tie" "Menu" "Umbrela" "Dish" "Flame" "Padlock" "Shampoo" "Egg" "Shield" "Nachos")
 DATA_DIR="data"
 mkdir -p "$DATA_DIR"
@@ -121,28 +125,19 @@ echo "8. Load Box"
 echo "9. List Saved Boxes"
 echo "0. Delete Saved Box"
 read -p "Choose an option: " choice
-if [[ $choice == "1" ]]; then
-	bashingbox
-elif [[ $choice == "2" ]]; then
-	bashingbox2
-elif [[ $choice == "3" ]]; then
-	bashingbox3
-elif [[ $choice == "4" ]]; then
-	bashingbox4
-elif [[ $choice == "5" ]]; then
-	bashingbox5
-elif [[ $choice == '6' ]]; then
-	bashingbox6
-elif [[ $choice == '7' ]]; then
-	bashingbox7
-elif [[ $choice == '8' ]]; then
-	bashingbox8
-elif [[ $choice == '9' ]]; then
-	bashingbox9
-elif [[ $choice == '0' ]]; then
-	bashingbox0
-else 
-	echo "Could Not Proceed With Command"
-fi 	
+
+case $choice in 
+	1) print_list ;;
+	2) print_item_at_position ;;
+	3) add_item ;;
+	4) remove_last_item ;;
+	5) remove_item_at_position ;;
+	6) exit_program ;;
+	7) save_box_to_file ;;
+	8) load_box_from_file ;;
+	9) list_saved_boxes ;;
+	0) delete_saved_box ;;
+	*) echo "Invalid Option! Please choose a valid number." ;;
+esac
 	
 
