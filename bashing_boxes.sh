@@ -2,89 +2,99 @@
 #Author Of Script: Kunj
 #Description: This is a simple bash program which manages an array of items.
 
-
-Frost=("Tie" "Menu" "Umbrela" "Dish" "Flame" "Padlock" "Shampoo" "Egg" "Shield" "Nachos")
+#Makes our Array
+box_items=("Tie" "Menu" "Umbrela" "Dish" "Flame" "Padlock" "Shampoo" "Egg" "Shield" "Nachos")
 DATA_DIR="data"
 mkdir -p "$DATA_DIR"
 
-bashingbox()
+#These are our functions which play out each script/program.
+print_list()
 {
-echo "${Frost[@]}"
+echo "${box_items[@]}"
 }
 
-bashingbox2()
+print_item_at_position()
 {
-read -p "Enter the position of the item to print (1-${#Frost[@]}): " answer
-if [[ "$answer" =~ ^[0-9]+$ ]] && (( answer >= 1 && answer <= ${#Frost[@]} )); then
-	echo "Your item is: ${Frost[$((answer-1))]}"
+read -p "Enter the position of the item to print (1-${#box_items[@]}): " answer
+if [[ "$answer" =~ ^[0-9]+$ ]] && (( answer >= 1 && answer <= ${#box_items[@]} )); then
+	echo "Your item is: ${box_items[$((answer-1))]}"
 else
-	echo "Invalid position! Please enter a number between 1 and ${#Frost[@]}."
+	echo "Invalid position! Please enter a number between 1 and ${#box_items[@]}."
 fi
 }
 
-bashingbox3()
+add_item()
 {
 echo "What Do You Want To Call The Item?"
 read ItemNew
-Frost+=("$ItemNew")
-echo "${Frost[@]}"
+box_items+=("$ItemNew")
+echo "${box_items[@]}"
 }
 
-bashingbox4()
+remove_last_item()
 {
-if [[ ${#Frost[@]} -gt 0 ]]; then
-	unset 'Frost[-1]'
-	Frost=("${Frost[@]}")
+if [[ ${#box_items[@]} -gt 0 ]]; then
+	unset 'box_items[-1]'
+	box_items=("${box_items[@]}")
 	echo "Last Item Removed."
-	echo "${Frost[@]}"
+	echo "${box_items[@]}"
 else
 	echo "The List Is Already Empty."
 fi
 }
 
-bashingbox5()
+remove_item_at_position()
 {
-read -p "Enter Position to Remove (1-${#Frost[@]}): " position_of_word
-if [[ "$position_of_word" =~ ^[0-9]+$ ]] && (( position_of_word >= 1 && position_of_word <= ${#Frost[@]} )); then
-	unset 'Frost[$((position_of_word-1))]'
-	Frost=("${Frost[@]}")
+read -p "Enter Position to Remove (1-${#box_items[@]}): " position_of_word
+if [[ "$position_of_word" =~ ^[0-9]+$ ]] && (( position_of_word >= 1 && position_of_word <= ${#box_items[@]} )); then
+	unset 'box_items[$((position_of_word-1))]'
+	box_items=("${box_items[@]}")
 	echo "Item at Position $position_of_word removed."
-	echo "${Frost[@]}"
+	echo "${box_items[@]}"
 else
-	echo "Invalid Position! Please Enter A Number Between 1 and ${#Frost[@]}."
+	echo "Invalid Position! Please Enter A Number Between 1 and ${#box_items[@]}."
 fi
 }
 
-bashingbox7()
+exit_program()
+{
+read -p "Would you like to save before exiting? (y/n): " choice
+if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+	bashingbox7
+fi
+exit
+}
+
+save_box_to_file()
 {
 read -p "Enter a name for your save file: " filename
 if [ -z "$filename" ]; then
 	echo "Filename cannot be empty."
 	return
 fi
-echo "${Frost[@]}" > "$DATA_DIR/$filename.txt"
+echo "${box_items[@]}" > "$DATA_DIR/$filename.txt"
 echo "Box saved as $filename.txt"
 }
 
-bashingbox8()
+load_box_from_file()
 {
 read -p "Enter the name of the file to load: " filename
 if [ ! -f "$DATA_DIR/$filename.txt" ]; then
 	echo "File not found!"
 	return
 fi
-mapfile -t Frost < <(tr ' ' '\n' < "$DATA_DIR/$filename.txt")
+mapfile -t box_items < <(tr ' ' '\n' < "$DATA_DIR/$filename.txt")
 echo "Box Loaded from $filename.txt"
-echo "${Frost[@]}"
+echo "${box_items[@]}"
 }
 
-bashingbox9()
+list_saved_boxes()
 {
 echo "Saved boxes:"
 ls "$DATA_DIR"
 }
 
-bashingbox0()
+delete_saved_box()
 {
 read -p "Enter the name of the save to delete: " filename
 if [ -f "$DATA_DIR/$filename.txt" ]; then
@@ -95,14 +105,6 @@ else
 fi
 }
 
-bashingbox6()
-{
-read -p "Would you like to save before exiting? (y/n): " choice
-if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
-	bashingbox7
-fi
-exit
-}
 
 
 
@@ -113,7 +115,7 @@ exit
 
 
 
-
+#Reads out options.
 echo "1. Print List"
 echo "2. Print Item at Position"
 echo "3. Add Item"
@@ -126,6 +128,7 @@ echo "9. List Saved Boxes"
 echo "0. Delete Saved Box"
 read -p "Choose an option: " choice
 
+#Connects the input of the person to the function to do.
 case $choice in 
 	1) print_list ;;
 	2) print_item_at_position ;;
