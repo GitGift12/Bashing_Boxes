@@ -48,6 +48,7 @@ esac
 print_list()
 {
 echo "${box_items[@]}"
+user_input
 }
 
 print_item_at_position()
@@ -63,6 +64,7 @@ echo "What Do You Want To Call The Item?"
 read ItemNew
 box_items+=("$ItemNew")
 echo "${box_items[@]}"
+user_input
 }
 
 remove_last_item()
@@ -75,6 +77,7 @@ if [[ ${#box_items[@]} -gt 0 ]]; then
 else
 	echo "The List Is Already Empty."
 fi
+user_input
 }
 
 remove_item_at_position()
@@ -86,7 +89,7 @@ read -p "Enter position to remove: " user_input
     else
         echo -e "Invalid position! Enter a number between 1 and ${#box_items[@]}."
     fi
-
+user_input
 }
 
 exit_program()
@@ -107,6 +110,7 @@ if [ -z "$filename" ]; then
 fi
 echo "${box_items[@]}" > "$DATA_DIR/$filename.txt"
 echo "Box saved as $filename.txt"
+user_input
 }
 
 load_box_from_file()
@@ -119,12 +123,14 @@ fi
 mapfile -t box_items < <(tr ' ' '\n' < "$DATA_DIR/$filename.txt")
 echo "Box Loaded from $filename.txt"
 echo "${box_items[@]}"
+user_input
 }
 
 list_saved_boxes()
 {
 echo "Saved boxes:"
 ls "$DATA_DIR"
+user_input
 }
 
 delete_saved_box()
@@ -136,6 +142,7 @@ if [ -f "$DATA_DIR/$filename.txt" ]; then
 else
 	echo "No such file found."
 fi
+user_input
 }
 
 
@@ -152,7 +159,7 @@ fi
 user_input(){
 
 
-echo -e "${BLUE}1. Print List${RESET}\n${BLUE}2. Print Item at Position${RESET}\n${GREEN}3. Add Item${RESET}\n${RED}4. Remove Last Item${RESET}\n${RED}5. Remove Item at Position${RESET}\n${RED}6. Exit${RESET}\n${GREEN}7. Save Box${RESET}\n${YELLOW}8. Load Box${RESET}\n${YELLOW}9. List Saved Boxes${RESET}\n${RED}0. Delete Saved Box${RESET}"
+echo -e "${BLUE}1. Print List${RESET}\n${BLUE}2. Print Item at Position${RESET}\n${GREEN}3. Add Item${RESET}\n${RED}4. Remove Last Item${RESET}\n${RED}5. Remove Item at Position${RESET}\n${RED}6. Exit${RESET}\n${GREEN}7. Save Box${RESET}\n${YELLOW}8. Load Box${RESET}\n${YELLOW}9. List Saved Boxes${RESET}\n${RED}0. Delete Saved Box${RESET}\n${CYAN}10. Generate Random Box From File${RESET}"
 read -p "Choose an option: " choice
 
 #Connects the input of the person to the function to do.
@@ -167,6 +174,7 @@ case $choice in
 	8) load_box_from_file ;;
 	9) list_saved_boxes ;;
 	0) delete_saved_box ;;
+	10) generate_random_box ;;
 	*) echo "Invalid Option! Please choose a valid number." ;;
 esac
 }
