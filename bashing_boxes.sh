@@ -145,6 +145,34 @@ fi
 user_input
 }
 
+generate_random_box()
+{
+	local file="warehouse_of_objects.txt"
+
+	#Checks file prescence and validity
+	 if [[ ! -s "$file" ]]; then
+        echo -e "${RED}Error: File missing or empty.${RESET}"
+        sleep 1; user_input; return
+    fi
+
+    #Load proper items
+    mapfile -t pool < <(grep -vE '^#|^$' "$file")
+
+    #Get box details
+    read -p "Enter box size (1-${#pool[@]}): " size
+    if ! [[ "$size" =~ ^[0-9]+$ && $size -ge 1 && $size -le ${#pool[@]} ]]; then
+        echo -e "${RED}Invalid number. Choose between 1 and ${#pool[@]}.${RESET}"
+        sleep 1; user_input; return
+    fi
+
+    #Randomly select items and update box
+    box_items=($(shuf -n "$size" "$file"))
+    echo -e "${GREEN}New random box created ($size items):${RESET}\n${CYAN}${box_items[*]}${RESET}"
+
+    #Make a smooth return to main menu
+    echo -e "${YELLOW}Returning to main menu...${RESET}"
+    sleep 1; user_input
+}
 
 
 
