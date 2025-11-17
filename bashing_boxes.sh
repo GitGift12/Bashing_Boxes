@@ -96,7 +96,7 @@ exit_program()
 {
 read -p "Would you like to save before exiting? (y/n): " choice
 if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
-	bashingbox7
+	save_box_to_file
 fi
 exit
 }
