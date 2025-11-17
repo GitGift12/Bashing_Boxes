@@ -20,30 +20,7 @@ sleep 1
 
 
 #These are our functions which play out each script/program.
-#Reads out options.
-user_input(){
 
-
-echo -e "${BLUE}1. Print List${RESET}\n2. Print Item at Position\n3. Add Item\n4. Remove Last Item\n5. Remove Item at Position\n6. Exit\n7. Save Box\n8. Load Box\n9. List Saved Boxes\n0. Delete Saved Box"
-read -p "Choose an option: " choice
-
-#Connects the input of the person to the function to do.
-case $choice in 
-	1) print_list ;;
-	2) print_item_at_position ;;
-	3) add_item ;;
-	4) remove_last_item ;;
-	5) remove_item_at_position ;;
-	6) exit_program ;;
-	7) save_box_to_file ;;
-	8) load_box_from_file ;;
-	9) list_saved_boxes ;;
-	0) delete_saved_box ;;
-	*) echo "Invalid Option! Please choose a valid number." ;;
-esac
-}
-
-	
 
 print_list()
 {
@@ -166,7 +143,7 @@ generate_random_box()
     fi
 
     #Randomly select items and update box
-    box_items=($(shuf -n "$size" "$file"))
+    box_items=($(printf "%s\n" "${pool[@]}" | shuf -n "$size"))
     echo -e "${GREEN}New random box created ($size items):${RESET}\n${CYAN}${box_items[*]}${RESET}"
 
     #Make a smooth return to main menu
